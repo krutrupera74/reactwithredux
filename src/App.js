@@ -1,65 +1,27 @@
-import React, { Component, Fragment } from 'react';
-import './App.css';
-import Loadable from 'react-loadable';
-import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-
-function Loading() {
-  return <h1>Loading ....</h1>
-}
-
-const SomeComponent = Loadable({
-  loader: () => import('./components/SomeComponent'),
-  loading: Loading
-});
-
-const AddUser = Loadable({
-  loader: () => import('./components/AddUser'),
-  loading: Loading
-});
-
-const Settings = Loadable({
-  loader: () => import('./components/Settings'),
-  loading: Loading
-});
-
+import React, { Component } from 'react';
+import { BrowserRouter as RouterOutlet, Route, Switch } from 'react-router-dom';
+import AboutPage from './components/About/aboutPage';
+import CompanyPage from './components/Company/companyPage';
+import CoursePage from './components/Courses/coursePage';
+import Home from './components/home';
+import NavBar from './NavBar';
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 class App extends Component {
-  state = {
-    showComponent: false
-  };
-
-  handleClick = () => {
-    this.setState({
-      showComponent: true
-    });
-  }
 
   render() {
-    return(
-      <Router>
+    return (
+      <RouterOutlet>
         <div>
-          <Link to="/">Dashboard</Link>
-          <div>
-            |
-          </div>
-          <Link to="/settings">Settings</Link>
-          <div>
-            |
-          </div>
-          <Link to="/add-user">Add User</Link>
-          <div>
-            |
-          </div>
-          <Link to="/somecomp">Some Component</Link>
+          <NavBar />
           <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/add-user" component={AddUser} />
-            <Route path="/somecomp" component={SomeComponent} />
+            <Route exact path="/" component={Home} />
+            <Route path="/company" component={CompanyPage} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/courses" component={CoursePage} />
           </Switch>
         </div>
-      </Router>
+      </RouterOutlet>
     )
   }
 }
